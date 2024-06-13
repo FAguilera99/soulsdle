@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="icon" href="" />
+    <script defer src="./src/game.js"></script>
+    <link rel="stylesheet" href="./src/output.css" />
+  </head>
+  <div class="navbar bg-base-100 z-50 fixed font-noto">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h8m-8 6h16"
+            />
+          </svg>
+        </div>
+        <ul
+          tabindex="0"
+          class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+        >
+          <li><a href="./index.html#tutorial">How to play</a></li>
+          <li><a href="./game.html">Play</a></li>
+        </ul>
+      </div>
+      <a
+        href="./index.html#top"
+        id="btnTop"
+        class="btn btn-ghost text-2xl drop-shadow-md font-light font-chivo hover:bg-accent hover:bg-opacity-30"
+        ><span class="hover:transition hover:scale-110 text-white"
+          >SOULSDLE</span
+        ></a
+      >
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1">
+        <li><a href="./index.html#tutorial">How to play</a></li>
+        <li><a href="./game.html">Play</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+      <a class="btn" href="https://github.com/FAguilera99/soulsdle">GitHub</a>
+    </div>
+  </div>
+  <br /><br /><br /><br />
+  <body>
+    <div class="flex justify-center">
+      <div class="flex-col">
+        <div>
+          <p class="text-center text-2xl">Enter your guess</p>
+        </div>
+        <br />
+
+        <div class="card card-bordered w-96 bg-base-100 text-neutral-content">
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">Attempts left:</h2>
+
+            <div id="dropdownContainer" class="my-3 absolute w-10">
+                <input
+                  type="text"
+                  placeholder="Search a weapon.."
+                  id="myInput"
+                  onkeyup="filterFunction()"
+                  autocomplete="off"
+                  class="w-max"
+                />
+                <div id="myDropdown" class="relative overflow-scroll">
+                  <a href="#about" class="block selection hover:bg-slate-400">About</a>
+                  <a href="#base" class="block selection">Base</a>
+                  <a href="#blog" class="block selection">Blog</a>
+                  <a href="#contact" class="block selection">Contact</a>
+                  <a href="#custom" class="block selection">Custom</a>
+                  <a href="#support" class="block selection">Support</a>
+                  <a href="#tools" class="block selection">Tools</a>
+                </div>
+              </div>
+
+            <div class="card-actions justify-end">
+              <button class="btn btn-primary">Accept</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-col justify-center">
+          
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
