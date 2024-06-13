@@ -16,6 +16,6 @@
     "vite": "^5.2.0"
   },
   "dependencies": {
-    "sql.js": "^1.10.3"
+    "sqlite3": "^5.1.7"
   }
 }

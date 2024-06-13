@@ -2,6 +2,28 @@
 
 var hp = 10;
 
+// SQLite
+
+
+// API
+const apiUrl = "https://jgalat.github.io/ds-weapons-api/";
+
+fetch(apiUrl)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  })
+  .then((userData) => {
+    // Process the retrieved user data
+    console.log("User Data:", userData);
+    console.log(userData[0].id);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+
 // Search
 document.querySelector("#dropdownContainer").addEventListener("input", (e) => {
   if (e.target.value != "") {
