@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "build": "npm run build"
+  },
   "devDependencies": {
     "daisyui": "^4.7.2",
     "netlify-cli": "^17.26.3",
