@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "daisyui": "^4.7.2",
+    "netlify-cli": "^17.26.3",
     "tailwindcss": "^3.4.1"
   },
   "dependencies": {
