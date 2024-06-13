@@ -2,11 +2,15 @@
 
 var hp = 10;
 
-// SQLite
-
-
 // API
 const apiUrl = "https://jgalat.github.io/ds-weapons-api/";
+const numWeapons = 116;
+
+if (sessionStorage.length == 0){
+    const weaponId = Math.floor(Math.random() * numWeapons);
+    console.log(weaponId);
+    sessionStorage.setItem("weaponId", weaponId);
+}
 
 fetch(apiUrl)
   .then((response) => {
@@ -17,8 +21,9 @@ fetch(apiUrl)
   })
   .then((userData) => {
     // Process the retrieved user data
-    console.log("User Data:", userData);
-    console.log(userData[0].id);
+    const weapon = userData[sessionStorage.getItem("weaponId")];
+    // Cheat (only for debugging and showcasing)
+    console.log(weapon.name);
   })
   .catch((error) => {
     console.error("Error:", error);
