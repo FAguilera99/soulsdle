@@ -12,22 +12,29 @@ if (sessionStorage.length == 0) {
   sessionStorage.setItem("weaponId", weaponId);
 }
 
-async function fetchWeapons(apiUrl) {
-  return fetch(apiUrl);
-}
-
-const allWeapons = await fetchWeapons(apiUrl);
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    populateDropdown(data);
+    document.querySelector(".selection").addEventListener("click", selectValue);
+  }
+  )
 
 // Populate dropdown
-var dropdownHtml = "";
-for (var i = 0; i < allWeapons.length; i++) {
-  var string = "";
+function populateDropdown(allWeapons) {
+  var dropdownHtml = "";
+  for (var i = 0; i < allWeapons.length; i++) {
+    const template = document.createElement('template');
 
-  string = '<a href="#base" class="block selection" value="' + i + '">';
-  string += allWeapons[i].name;
-  string += "Base</a>";
+    var string = "";
+    string = '<a href="#base" class="block selection" value="' + i + '">';
+    string += allWeapons[i].name;
+    string += "</a>";
 
-  document.querySelector("#myDropdown").appendChild(string);
+    template.innerHTML = string;
+    document.querySelector("#myDropdown").appendChild(template.content);
+  }
 }
 
 // Search
@@ -72,8 +79,6 @@ function searchFilter() {
 }
 
 // Select value in Search
-document.querySelector(".selection").addEventListener("click", selectValue);
-
 function selectValue(e) {
   document.querySelector("#searchInput").value = e.target.textContent;
 }
