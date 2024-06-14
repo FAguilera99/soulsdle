@@ -32,17 +32,17 @@ fetch(apiUrl)
 // Search
 document.querySelector("#dropdownContainer").addEventListener("input", (e) => {
   if (e.target.value != "") {
-    //document.querySelector("#myDropdown").classList.remove("hidden");
-    //document.querySelector("#myDropdown").classList.add("block");
+    document.querySelector("#myDropdown").classList.remove("hidden");
   } else {
-    //document.querySelector("#myDropdown").classList.remove("block");
-    //document.querySelector("#myDropdown").classList.add("hidden");
+    document.querySelector("#myDropdown").classList.add("hidden");
   }
 });
 
+document.querySelector("#searchInput").addEventListener("input", searchFilter);
+
 // Filter
-function filterFunction() {
-  var input = document.getElementById("myInput");
+function searchFilter() {
+  var input = document.getElementById("searchInput");
   var filter = input.value.toUpperCase();
   var div = document.querySelector("#myDropdown");
   var a = div.getElementsByTagName("a");
@@ -61,6 +61,6 @@ function filterFunction() {
 document.querySelector(".selection").addEventListener("click", selectValue);
 
 function selectValue(e) {
-  document.querySelector("#myInput").value = e.target.textContent;
+  document.querySelector("#searchInput").value = e.target.textContent;
 }
 //
