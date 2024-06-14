@@ -12,27 +12,23 @@ if (sessionStorage.length == 0) {
   sessionStorage.setItem("weaponId", weaponId);
 }
 
-var allWeapons;
-var weapon;
+async function fetchWeapons(apiUrl) {
+  return fetch(apiUrl);
+}
 
-fetch(apiUrl)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    return response.json();
-  })
-  .then((userData) => {
-    // Process the retrieved user data
-    allWeapons = userData;
-    console.log(userData[sessionStorage.getItem("weaponId")]);
-    weapon = userData[sessionStorage.getItem("weaponId")];
-    // Cheat (only for debugging and showcasing)
-    console.log(weapon.name);
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
+const allWeapons = await fetchWeapons(apiUrl);
+
+// Populate dropdown
+var dropdownHtml = "";
+for (var i = 0; i < allWeapons.length; i++) {
+  var string = "";
+
+  string = '<a href="#base" class="block selection" value="' + i + '">';
+  string += allWeapons[i].name;
+  string += "Base</a>";
+
+  document.querySelector("#myDropdown").appendChild(string);
+}
 
 // Search
 document.querySelector("#dropdownContainer").addEventListener("input", (e) => {
@@ -45,10 +41,23 @@ document.querySelector("#dropdownContainer").addEventListener("input", (e) => {
 
 document.querySelector("#searchInput").addEventListener("input", searchFilter);
 
+// Close and open dropdown
+document.addEventListener("click", (e) => {
+  if (!e.target.closest("#dropdownProfileButton")) {
+    document.querySelector("#myDropdown").classList.add("hidden");
+  }
+});
+
+document.querySelector("#searchInput").addEventListener("click", (e) => {
+  if (e.target.value != "") {
+    document.querySelector("#myDropdown").classList.remove("hidden");
+  }
+});
+
 // Filter
 function searchFilter() {
   var searchInput = document.getElementById("searchInput");
-  var filter = input.value.toUpperCase();
+  var filter = searchInput.value.toUpperCase();
   var div = document.querySelector("#myDropdown");
   var a = div.getElementsByTagName("a");
 
@@ -70,11 +79,10 @@ function selectValue(e) {
 }
 
 // Guesses boxes
-document.querySelector("#btnGuess").addEventListener('click', e => {
+document.querySelector("#btnGuess").addEventListener("click", (e) => {
   var searchInput = document.querySelector("#searchInput");
-  if (searchInput.value != null)
-    console.log("");
-})
+  if (searchInput.value != null) console.log("");
+});
 
 function insertGuessRow() {
   var div = document.querySelector("#guessesDiv");
