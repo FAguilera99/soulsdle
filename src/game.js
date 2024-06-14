@@ -6,11 +6,14 @@ var hp = 10;
 const apiUrl = "https://jgalat.github.io/ds-weapons-api/";
 const numWeapons = 116;
 
-if (sessionStorage.length == 0){
-    const weaponId = Math.floor(Math.random() * numWeapons);
-    console.log(weaponId);
-    sessionStorage.setItem("weaponId", weaponId);
+if (sessionStorage.length == 0) {
+  const weaponId = Math.floor(Math.random() * numWeapons);
+  console.log(weaponId);
+  sessionStorage.setItem("weaponId", weaponId);
 }
+
+var allWeapons;
+var weapon;
 
 fetch(apiUrl)
   .then((response) => {
@@ -21,7 +24,9 @@ fetch(apiUrl)
   })
   .then((userData) => {
     // Process the retrieved user data
-    const weapon = userData[sessionStorage.getItem("weaponId")];
+    allWeapons = userData;
+    console.log(userData[sessionStorage.getItem("weaponId")]);
+    weapon = userData[sessionStorage.getItem("weaponId")];
     // Cheat (only for debugging and showcasing)
     console.log(weapon.name);
   })
@@ -42,7 +47,7 @@ document.querySelector("#searchInput").addEventListener("input", searchFilter);
 
 // Filter
 function searchFilter() {
-  var input = document.getElementById("searchInput");
+  var searchInput = document.getElementById("searchInput");
   var filter = input.value.toUpperCase();
   var div = document.querySelector("#myDropdown");
   var a = div.getElementsByTagName("a");
@@ -63,4 +68,16 @@ document.querySelector(".selection").addEventListener("click", selectValue);
 function selectValue(e) {
   document.querySelector("#searchInput").value = e.target.textContent;
 }
-//
+
+// Guesses boxes
+document.querySelector("#btnGuess").addEventListener('click', e => {
+  var searchInput = document.querySelector("#searchInput");
+  if (searchInput.value != null)
+    console.log("");
+})
+
+function insertGuessRow() {
+  var div = document.querySelector("#guessesDiv");
+
+  div.appendChild(buildGuessBox());
+}

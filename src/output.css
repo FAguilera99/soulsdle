@@ -857,13 +857,6 @@ html{
   flex-grow: 1;
 }
 
-.card-actions{
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 0.5rem;
-}
-
 .card figure{
   display: flex;
   align-items: center;
@@ -1729,15 +1722,36 @@ html{
   font-size: 0.75rem;
 }
 
+.btn-sm{
+  height: 2rem;
+  min-height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 0.875rem;
+}
+
 .btn-square:where(.btn-xs){
   height: 1.5rem;
   width: 1.5rem;
   padding: 0px;
 }
 
+.btn-square:where(.btn-sm){
+  height: 2rem;
+  width: 2rem;
+  padding: 0px;
+}
+
 .btn-circle:where(.btn-xs){
   height: 1.5rem;
   width: 1.5rem;
+  border-radius: 9999px;
+  padding: 0px;
+}
+
+.btn-circle:where(.btn-sm){
+  height: 2rem;
+  width: 2rem;
   border-radius: 9999px;
   padding: 0px;
 }
@@ -1813,6 +1827,14 @@ html{
   position: fixed;
 }
 
+.absolute{
+  position: absolute;
+}
+
+.z-10{
+  z-index: 10;
+}
+
 .z-50{
   z-index: 50;
 }
@@ -1825,6 +1847,10 @@ html{
   margin-bottom: 1.25rem;
 }
 
+.mt-14{
+  margin-top: 3.5rem;
+}
+
 .mt-3{
   margin-top: 0.75rem;
 }
@@ -1833,8 +1859,16 @@ html{
   display: block;
 }
 
+.inline-block{
+  display: inline-block;
+}
+
 .flex{
   display: flex;
+}
+
+.grid{
+  display: grid;
 }
 
 .hidden{
@@ -1845,12 +1879,20 @@ html{
   height: 1.25rem;
 }
 
+.h-\[32px\]{
+  height: 32px;
+}
+
 .max-h-\[390px\]{
   max-height: 390px;
 }
 
 .min-h-screen{
   min-height: 100vh;
+}
+
+.w-1\/2{
+  width: 50%;
 }
 
 .w-11\/12{
@@ -1869,20 +1911,49 @@ html{
   width: 13rem;
 }
 
+.w-8\/12{
+  width: 66.666667%;
+}
+
 .w-96{
   width: 24rem;
+}
+
+.w-\[32px\]{
+  width: 32px;
 }
 
 .w-full{
   width: 100%;
 }
 
+.w-max{
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .max-w-md{
   max-width: 28rem;
 }
 
+.flex-1{
+  flex: 1 1 0%;
+}
+
+.grid-cols-8{
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-rows-1{
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+}
+
 .flex-col{
   flex-direction: column;
+}
+
+.content-center{
+  align-content: center;
 }
 
 .items-center{
@@ -1909,6 +1980,10 @@ html{
   border-radius: var(--rounded-box, 1rem);
 }
 
+.border-4{
+  border-width: 4px;
+}
+
 .border-8{
   border-width: 8px;
 }
@@ -1916,6 +1991,11 @@ html{
 .border-black{
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
+.border-white{
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
 .bg-base-100{
@@ -2023,10 +2103,6 @@ html{
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-.filter{
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
 @media (min-width: 640px){
   .sm\:btn-sm{
     height: 2rem;
@@ -2094,6 +2170,19 @@ html{
     border-radius: 9999px;
     padding: 0px;
   }
+}
+
+.\*\:z-10 > *{
+  z-index: 10;
+}
+
+.\*\:border-black > *{
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
+.\*\:text-center > *{
+  text-align: center;
 }
 
 .hover\:scale-110:hover{
