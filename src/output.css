@@ -1855,10 +1855,6 @@ html{
   margin-top: 0.75rem;
 }
 
-.block{
-  display: block;
-}
-
 .inline-block{
   display: inline-block;
 }
@@ -2176,6 +2172,22 @@ html{
   z-index: 10;
 }
 
+.\*\:flex > *{
+  display: flex;
+}
+
+.\*\:h-16 > *{
+  height: 4rem;
+}
+
+.\*\:w-60 > *{
+  width: 15rem;
+}
+
+.\*\:justify-start > *{
+  justify-content: flex-start;
+}
+
 .\*\:border-black > *{
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
@@ -2183,6 +2195,10 @@ html{
 
 .\*\:text-center > *{
   text-align: center;
+}
+
+.\*\:text-start > *{
+  text-align: start;
 }
 
 .hover\:scale-110:hover{
@@ -2194,11 +2210,6 @@ html{
 .hover\:bg-accent:hover{
   --tw-bg-opacity: 1;
   background-color: var(--fallback-a,oklch(var(--a)/var(--tw-bg-opacity)));
-}
-
-.hover\:bg-slate-400:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-opacity-30:hover{

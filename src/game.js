@@ -1,5 +1,7 @@
 "use strict";
 
+//const { i } = require("vite/dist/node/types.d-aGj9QkWt");
+
 var hp = 10;
 
 // API
@@ -13,26 +15,42 @@ if (sessionStorage.length == 0) {
 }
 
 fetch(apiUrl)
-  .then(response => response.json())
-  .then(data => {
+  .then((response) => response.json())
+  .then((data) => {
     console.log(data);
     populateDropdown(data);
-    document.querySelector(".selection").addEventListener("click", selectValue);
-  }
-  )
+    document
+      .querySelectorAll(".selection")
+      .forEach(element => {
+        element.addEventListener("click", (e) => selectValue(e, data));
+      })
+  });
 
 // Populate dropdown
 function populateDropdown(allWeapons) {
   var dropdownHtml = "";
   for (var i = 0; i < allWeapons.length; i++) {
-    const template = document.createElement('template');
+    var imgSrc = "./media/weapons/" + i + ".png";
+    var imgString =
+      '<img class="w-[32px] h-[32px]" src="' +
+      imgSrc +
+      '" title="' +
+      allWeapons[i].name +
+      '"/>';
+    
+    var finalString =
+      '<a href="#base" class="inline-block hover:bg-white pt-[5px] selection" value="' + i + '">';
+    finalString += imgString;
+    finalString +=
+      '<span title="' +
+      allWeapons[i].name +
+      '" class=".selectionValue">' +
+      allWeapons[i].name +
+      "</span>";
+    finalString += "</a>";
 
-    var string = "";
-    string = '<a href="#base" class="block selection" value="' + i + '">';
-    string += allWeapons[i].name;
-    string += "</a>";
-
-    template.innerHTML = string;
+    const template = document.createElement("template");
+    template.innerHTML = finalString;
     document.querySelector("#myDropdown").appendChild(template.content);
   }
 }
@@ -79,8 +97,9 @@ function searchFilter() {
 }
 
 // Select value in Search
-function selectValue(e) {
-  document.querySelector("#searchInput").value = e.target.textContent;
+function selectValue(e, allWeapons) {
+  console.log(e.target.title);
+  document.querySelector("#searchInput").value = e.target.title;
 }
 
 // Guesses boxes
