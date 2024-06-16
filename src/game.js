@@ -40,7 +40,7 @@ fetch(apiUrl)
 function populateDropdown(allWeapons) {
   var dropdownHtml = "";
   for (var i = 0; i < allWeapons.length; i++) {
-    var imgSrc = "./src/weapons/" + i + ".png";
+    var imgSrc = "./media/weapons/" + i + ".png";
     var imgString =
       '<img class="w-[32px] h-[32px]" src="' +
       imgSrc +
