@@ -1,5 +1,4 @@
 "use strict";
-//import images from "./media/weapons/";
 
 // API
 const apiUrl = "https://jgalat.github.io/ds-weapons-api/";
@@ -43,9 +42,9 @@ function populateDropdown(allWeapons) {
   for (var i = 0; i < allWeapons.length; i++) {
     var link = document.createElement("a");
     link.href = "#";
-    link.classList = "inline-block bg-blue-500 pt-[5px] selection";
+    link.classList = "inline-block bg-blue-500 pt-[5px] selection";    
 
-    var imgSrc = "/media/weapons/" + i + ".png";
+    var imgSrc = "/public/weapons/" + i + ".png";
     var img = document.createElement("img");
     img.src = imgSrc;
     img.classList = "w-[32px] h-[32px]";
@@ -57,7 +56,7 @@ function populateDropdown(allWeapons) {
     span.textContent = allWeapons[i].name;
     span.classList = "selection";
     link.appendChild(span);
-    
+
     document.querySelector("#myDropdown").appendChild(link);
   }
 }
