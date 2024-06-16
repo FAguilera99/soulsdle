@@ -1722,36 +1722,15 @@ html{
   font-size: 0.75rem;
 }
 
-.btn-sm{
-  height: 2rem;
-  min-height: 2rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  font-size: 0.875rem;
-}
-
 .btn-square:where(.btn-xs){
   height: 1.5rem;
   width: 1.5rem;
   padding: 0px;
 }
 
-.btn-square:where(.btn-sm){
-  height: 2rem;
-  width: 2rem;
-  padding: 0px;
-}
-
 .btn-circle:where(.btn-xs){
   height: 1.5rem;
   width: 1.5rem;
-  border-radius: 9999px;
-  padding: 0px;
-}
-
-.btn-circle:where(.btn-sm){
-  height: 2rem;
-  width: 2rem;
   border-radius: 9999px;
   padding: 0px;
 }
@@ -1871,8 +1850,16 @@ html{
   display: none;
 }
 
+.h-10{
+  height: 2.5rem;
+}
+
 .h-5{
   height: 1.25rem;
+}
+
+.h-\[200px\]{
+  height: 200px;
 }
 
 .h-\[32px\]{
@@ -1885,10 +1872,6 @@ html{
 
 .min-h-screen{
   min-height: 100vh;
-}
-
-.w-1\/2{
-  width: 50%;
 }
 
 .w-11\/12{
@@ -1997,11 +1980,6 @@ html{
 .bg-base-100{
   --tw-bg-opacity: 1;
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
-}
-
-.bg-blue-500{
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .bg-left{
