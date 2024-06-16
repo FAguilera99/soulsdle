@@ -1,4 +1,5 @@
 "use strict";
+import images from "./media/weapons/*.png";
 
 // API
 const apiUrl = "https://jgalat.github.io/ds-weapons-api/";
