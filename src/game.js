@@ -44,7 +44,7 @@ function populateDropdown(allWeapons) {
     link.href = "#";
     link.classList = "inline-block bg-blue-500 pt-[5px] selection";    
 
-    var imgSrc = "/public/weapons/" + i + ".png";
+    var imgSrc = "/weapons/" + i + ".png";
     var img = document.createElement("img");
     img.src = imgSrc;
     img.classList = "w-[32px] h-[32px]";
