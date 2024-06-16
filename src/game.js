@@ -1,5 +1,5 @@
 "use strict";
-import images from "./media/weapons/";
+//import images from "./media/weapons/";
 
 // API
 const apiUrl = "https://jgalat.github.io/ds-weapons-api/";
@@ -41,31 +41,24 @@ fetch(apiUrl)
 function populateDropdown(allWeapons) {
   var dropdownHtml = "";
   for (var i = 0; i < allWeapons.length; i++) {
+    var link = document.createElement("a");
+    link.href = "#";
+    link.classList = "inline-block bg-blue-500 pt-[5px] selection";
+
     var imgSrc = "/media/weapons/" + i + ".png";
-    var imgString =
-      '<img class="w-[32px] h-[32px]" src="' +
-      imgSrc +
-      '" title="' +
-      allWeapons[i].name +
-      '"/>';
+    var img = document.createElement("img");
+    img.src = imgSrc;
+    img.classList = "w-[32px] h-[32px]";
+    img.title = allWeapons[i].name;
+    link.appendChild(img);
 
-    var finalString =
-      '<a href="#" class="inline-block bg-blue-500 pt-[5px] selection" value="' +
-      i +
-      '">';
-    finalString += imgString;
-    finalString +=
-      '<span title="' +
-      allWeapons[i].name +
-      '" class=".selectionValue">' +
-      allWeapons[i].name +
-      "</span>";
-    finalString += "</a>";
-    //console.log(finalString);
-
-    const template = document.createElement("template");
-    template.innerHTML = finalString;
-    document.querySelector("#myDropdown").appendChild(template.content);
+    var span = document.createElement("span");
+    span.title = allWeapons[i].name;
+    span.textContent = allWeapons[i].name;
+    span.classList = "selection";
+    link.appendChild(span);
+    
+    document.querySelector("#myDropdown").appendChild(link);
   }
 }
 
