@@ -15,7 +15,7 @@ function main(data) {
   }
 
   // ONLY FOR TESTING
-  sessionStorage.setItem("weaponId", 6); // 6 == Bastard sword STR = 16/C
+  sessionStorage.setItem("weaponId", 13); // 13 == blacksmith giant hammer
 
   var allWeapons = data;
   console.log(allWeapons[sessionStorage.getItem("weaponId")].name);
@@ -40,32 +40,38 @@ fetch(apiUrl)
     main(data);
   });
 
-
 //
 // Generate row of boxes when a guess is selected
-function generateGuessBox(e, data){
+function generateGuessBox(e, data) {
   const weaponId = e.target.id;
   const allWeapons = data;
   var guessesDiv = document.querySelector("#guessesDiv");
-  //console.log("weaponid " + weaponId);
 
   var row = generateRow(weaponId, allWeapons);
   var name = generateName(weaponId, allWeapons);
   var wpnType = generateWpnType(weaponId, allWeapons);
   var atkType = generateAtkType(weaponId, allWeapons);
-  var strength = generateStr(weaponId, allWeapons);
+  var strength = generateStat(weaponId, allWeapons, "strength");
+  var dexterity = generateStat(weaponId, allWeapons, "dexterity");
+  var intelligence = generateStat(weaponId, allWeapons, "intelligence");
+  var faith = generateStat(weaponId, allWeapons, "faith");
+  var dmgType = generateDmgType(weaponId, allWeapons);
 
   row.appendChild(name);
   row.appendChild(wpnType);
   row.appendChild(atkType);
   row.appendChild(strength);
+  row.appendChild(dexterity);
+  row.appendChild(intelligence);
+  row.appendChild(faith);
+  row.appendChild(dmgType);
   guessesDiv.appendChild(row);
 }
 
 // Generate row of guess
 function generateRow(weaponId, allWeapons) {
-  var row = document.createElement("div");
-  row.classList.add("guess-row");
+  const template = document.querySelector("#rowTemplate");
+  var row = template.cloneNode(true);
   return row;
 }
 
@@ -94,8 +100,7 @@ function generateName(weaponId, allWeapons) {
   if (weaponId == sessionStorage.getItem("weaponId")) {
     console.log("Correct!");
     span.classList.add("correct-span");
-  }
-  else {
+  } else {
     console.log("Incorrect!");
     span.classList.add("incorrect-span");
   }
@@ -111,11 +116,13 @@ function generateWpnType(weaponId, allWeapons) {
   span.classList = "guess-span";
   span.textContent = capitalizeFirstLetter(allWeapons[weaponId].weapon_type);
 
-  if (allWeapons[weaponId].weapon_type == allWeapons[sessionStorage.getItem("weaponId")].weapon_type) {
+  if (
+    allWeapons[weaponId].weapon_type ==
+    allWeapons[sessionStorage.getItem("weaponId")].weapon_type
+  ) {
     console.log("Correct!");
     span.classList.add("correct-span");
-  }
-  else {
+  } else {
     console.log("Incorrect!");
     span.classList.add("incorrect-span");
   }
@@ -135,11 +142,9 @@ function generateAtkType(weaponId, allWeapons) {
 
   if (thisType == correctType) {
     span.classList.add("correct-span");
-  }
-  else if (correctType.includes(thisType) || thisType.includes(correctType)) {
+  } else if (correctType.includes(thisType) || thisType.includes(correctType)) {
     span.classList.add("partial-span");
-  }
-  else {
+  } else {
     span.classList.add("incorrect-span");
   }
 
@@ -148,18 +153,25 @@ function generateAtkType(weaponId, allWeapons) {
 }
 
 // Generate span for strength requirement / scaling
-function generateStr(weaponId, allWeapons) {
+function generateStat(weaponId, allWeapons, stat) {
   var box = generateBlockBox();
   var span = document.createElement("span");
   span.classList = "guess-span";
 
-  var thisReq = allWeapons[weaponId].requirements.strength;
-  var correctReq = allWeapons[sessionStorage.getItem("weaponId")].requirements.strength;
-  
-  var thisScale = allWeapons[weaponId].bonus.strength;
-  var correctScale = allWeapons[sessionStorage.getItem("weaponId")].bonus.strength;
+  var div = document.createElement("div");
+
+  var thisReq = allWeapons[weaponId].requirements[stat];
+  var correctReq =
+    allWeapons[sessionStorage.getItem("weaponId")].requirements[stat];
+
+  var thisScale = allWeapons[weaponId].bonus[stat];
+  var correctScale =
+    allWeapons[sessionStorage.getItem("weaponId")].bonus[stat];
 
   if (thisReq == correctReq && thisScale == correctScale) {
+    if (thisScale == null) {
+      thisScale = "No";
+    }
     span.textContent = thisReq + " / " + thisScale;
     span.classList.add("correct-span");
   } else {
@@ -168,42 +180,92 @@ function generateStr(weaponId, allWeapons) {
     } else {
       span.classList.add("partial-span");
     }
-    var txt = "";
     // a > b = false (default js behaviour)
     // in dark souls, higher is better
     // objective is (arrow) req / scale (arrow)
     // TODO FIX BREAKSPACE ON ARROWS
     if (thisReq < correctReq) {
-      var reqArrow = document.createElement("img");
-      reqArrow.classList = "req-arrow";
-      reqArrow.src = "/public/icons/arrow_up.png";
-      span.appendChild(reqArrow);
+      var arrow = createArrow("up");
+      arrow.style.float = "left";
+      div.appendChild(arrow);
     } else if (thisReq > correctReq) {
-      var reqArrow = document.createElement("img");
-      reqArrow.classList = "req-arrow";
-      reqArrow.src = "/public/icons/arrow_down.png";
-      span.appendChild(reqArrow);
+      var arrow = createArrow("down");
+      arrow.style.float = "left";
+      div.appendChild(arrow);
     }
 
     var txt = document.createElement("span");
+    if (thisScale == null) {
+      thisScale = "No";
+    }
     txt.textContent = thisReq + " / " + thisScale;
-    span.appendChild(txt);
+    div.appendChild(txt);
 
     if (thisScale < correctScale) {
-      var reqArrow = document.createElement("img");
-      reqArrow.classList = "req-arrow";
-      reqArrow.src = "/public/icons/arrow_up.png";
-      span.appendChild(reqArrow);
-    } else if (thisScale > correctScale) {
-      var reqArrow = document.createElement("img");
-      reqArrow.classList = "req-arrow";
-      reqArrow.src = "/public/icons/arrow_down.png";
-      span.appendChild(reqArrow);
+      var arrow = createArrow("up");
+      arrow.style.float = "right";
+      div.lastChild.after(arrow);
+    } else if (thisScale > correctScale || correctScale == null) {
+      var arrow = createArrow("down");
+      arrow.style.float = "right";
+      div.lastChild.after(arrow);
+    }
+  }
+
+  span.appendChild(div);
+  box.appendChild(span);
+  return box;
+}
+
+// Generate span for special weapon
+function generateDmgType(weaponId, allWeapons) {
+  var box = generateBlockBox();
+  var span = document.createElement("span");
+  span.classList = "guess-span";
+
+  var damages = allWeapons[weaponId].damage;
+  damages = Object.keys(damages).map((key) => [key, damages[key]]);
+  var myDamages = [];
+
+  damages.forEach(element => {
+    if (element[1] > 0) {
+      myDamages.push(element[0]);
+    }
+  });
+
+  var correctDamages = [];
+  var correctId = sessionStorage.getItem("weaponId");
+  damages = allWeapons[correctId].damage;
+  damages = Object.keys(damages).map((key) => [key, damages[key]]);
+  damages.forEach(element => {
+    if (element[1] > 0) {
+      correctDamages.push(element[0]);
+    }
+  });
+
+  span.textContent = myDamages.join(', ');
+
+  if (arraysEqual(myDamages, correctDamages)) {
+    span.classList.add("correct-span");
+  } else {
+    let intersection = myDamages.filter(
+      (element) => correctDamages.includes(element));
+
+    console.log(intersection);
+    
+    if (intersection.length == 0) {
+      span.classList.add("incorrect-span");
+    } else {
+      span.classList.add("partial-span");
     }
   }
 
   box.appendChild(span);
   return box;
+
+  console.log(myDamages);
+  console.log(correctDamages);
+  console.log(arraysEqual(myDamages, correctDamages));
 }
 
 // Populate dropdown
@@ -212,8 +274,7 @@ function populateDropdown(allWeapons) {
   for (var i = 0; i < allWeapons.length; i++) {
     var span = document.createElement("span");
     span.id = i;
-    span.classList = "dropdown-row selection"; 
-    //span.classList = "inline-block cursor-pointer bg-blue-500 pt-[5px] selection";    
+    span.classList = "dropdown-row selection";
 
     var imgSrc = "/weapons/" + i + ".png";
     var img = document.createElement("img");
@@ -253,7 +314,6 @@ document.addEventListener("click", (e) => {
 });
 
 document.querySelector("#searchInput").addEventListener("click", (e) => {
-  
   if (e.target.value != "") {
     document.querySelector("#myDropdown").classList.remove("hidden");
   }
@@ -291,7 +351,7 @@ function selectValue(e, allWeapons) {
 
 // Counter
 var attempts = 10;
-function attemptCounter(){
+function attemptCounter() {
   attempts -= 1;
   document.querySelector("#counter").innerHTML = attempts;
 }
@@ -304,11 +364,32 @@ function insertGuessRow() {
 }
 
 // Clue button
-document.querySelector("#counter").addEventListener("change", e => {
+document.querySelector("#counter").addEventListener("change", (e) => {
   console.log(e.target.value);
-})
+});
 
 // Helper functions
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function createArrow(direction) {
+  var img = document.createElement("img");
+  img.src = "/public/icons/arrow_" + direction + ".png";
+  img.classList = "arrow";
+  return img;
+}
+
+function arraysEqual(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length !== b.length) return false;
+
+  a.sort();
+  b.sort();
+
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
 }

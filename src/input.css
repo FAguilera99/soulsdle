@@ -29,9 +29,9 @@
 
   .guess-row {
     display: grid;
-    grid-column: 8;
-    grid-row: 1;
-    margin-top: 14;
+    grid-column: 1;
+    grid-row: 8;
+    margin-top: 14px;
     height: 130px;
   }
 
@@ -77,8 +77,12 @@
     margin-left: auto;
     margin-right: auto;
   }
-  .req-arrow {
-    height: 16px;
-    width: 16px;
+  .arrow {
+    height: 24px;
+    width: 24px;
+    white-space: nowrap;
+  }
+  .prevent-linebreak {
+    white-space: nowrap;
   }
 }
