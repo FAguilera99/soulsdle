@@ -14,14 +14,16 @@ function main(data) {
     sessionStorage.setItem("weaponId", weaponId);
   }
   var allWeapons = data;
-  console.log(allWeapons[0].name);
+  console.log(allWeapons[sessionStorage.getItem("weaponId")].name);
 
   populateDropdown(allWeapons);
 
   document.querySelectorAll(".selection").forEach((element) => {
     element.addEventListener("click", (e) => {
+      //console.log("here " + e.target.id);
       attemptCounter();
       selectValue(e, data);
+      generateGuessBox(e, data);
     });
   });
 }
@@ -36,28 +38,67 @@ fetch(apiUrl)
 
 
 //
+// Generate row of boxes when a guess is selected
+function generateGuessBox(e, data){
+  const weaponId = e.target.id;
+  const allWeapons = data;
+  var guessesDiv = document.querySelector("#guessesDiv");
+  //console.log("weaponid " + weaponId);
+
+  var container = generateContainer(weaponId, allWeapons);
+  var name = generateNameBox(weaponId, allWeapons);
+
+  container.appendChild(name);
+  guessesDiv.appendChild(container);
+}
+
+// Generate container div
+function generateContainer(weaponId, allWeapons) {
+  var row = document.createElement("div");
+  row.classList.add("guess-container");
+  return row;
+}
+
+// Generate weapon's name box
+function generateNameBox(weaponId, allWeapons) {
+  var container = document.createElement("div");
+
+  if (weaponId == sessionStorage.getItem("weaponId")) {
+    console.log("Correct!");
+    container.classList = "correct-container";
+  }
+  else {
+    console.log("Incorrect!");
+    container.classList = "incorrect-container";
+  }
+  return container;
+}
+
 // Populate dropdown
 function populateDropdown(allWeapons) {
   var dropdownHtml = "";
   for (var i = 0; i < allWeapons.length; i++) {
-    var link = document.createElement("a");
-    link.href = "#";
-    link.classList = "inline-block bg-blue-500 pt-[5px] selection";    
+    var span = document.createElement("span");
+    span.id = i;
+    span.classList = "dropdown-row selection"; 
+    //span.classList = "inline-block cursor-pointer bg-blue-500 pt-[5px] selection";    
 
     var imgSrc = "/weapons/" + i + ".png";
     var img = document.createElement("img");
     img.src = imgSrc;
-    img.classList = "w-[32px] h-[32px]";
+    img.id = i;
+    img.classList = "w-[48px] h-[48px]";
     img.title = allWeapons[i].name;
-    link.appendChild(img);
+    span.appendChild(img);
 
-    var span = document.createElement("span");
-    span.title = allWeapons[i].name;
-    span.textContent = allWeapons[i].name;
-    span.classList = "selection";
-    link.appendChild(span);
+    var innerSpan = document.createElement("span");
+    innerSpan.title = allWeapons[i].name;
+    innerSpan.id = i;
+    innerSpan.textContent = allWeapons[i].name;
+    innerSpan.classList.add("selection");
+    span.appendChild(innerSpan);
 
-    document.querySelector("#myDropdown").appendChild(link);
+    document.querySelector("#myDropdown").appendChild(span);
   }
 }
 
@@ -82,7 +123,6 @@ document.addEventListener("click", (e) => {
 document.querySelector("#searchInput").addEventListener("click", (e) => {
   
   if (e.target.value != "") {
-    console.log("boop");
     document.querySelector("#myDropdown").classList.remove("hidden");
   }
 });
