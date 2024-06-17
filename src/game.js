@@ -13,6 +13,10 @@ function main(data) {
     console.log(weaponId);
     sessionStorage.setItem("weaponId", weaponId);
   }
+
+  // ONLY FOR TESTING
+  sessionStorage.setItem("weaponId", 6); // 6 == Bastard sword STR = 16/C
+
   var allWeapons = data;
   console.log(allWeapons[sessionStorage.getItem("weaponId")].name);
 
@@ -45,33 +49,161 @@ function generateGuessBox(e, data){
   var guessesDiv = document.querySelector("#guessesDiv");
   //console.log("weaponid " + weaponId);
 
-  var container = generateContainer(weaponId, allWeapons);
-  var name = generateNameBox(weaponId, allWeapons);
+  var row = generateRow(weaponId, allWeapons);
+  var name = generateName(weaponId, allWeapons);
+  var wpnType = generateWpnType(weaponId, allWeapons);
+  var atkType = generateAtkType(weaponId, allWeapons);
+  var strength = generateStr(weaponId, allWeapons);
 
-  container.appendChild(name);
-  guessesDiv.appendChild(container);
+  row.appendChild(name);
+  row.appendChild(wpnType);
+  row.appendChild(atkType);
+  row.appendChild(strength);
+  guessesDiv.appendChild(row);
 }
 
-// Generate container div
-function generateContainer(weaponId, allWeapons) {
+// Generate row of guess
+function generateRow(weaponId, allWeapons) {
   var row = document.createElement("div");
-  row.classList.add("guess-container");
+  row.classList.add("guess-row");
   return row;
 }
 
-// Generate weapon's name box
-function generateNameBox(weaponId, allWeapons) {
-  var container = document.createElement("div");
+// Generate box that sorrounds each span
+function generateBlockBox() {
+  var box = document.createElement("div");
+  box.classList = "block-box";
+  return box;
+}
+
+// Generate weapon's name span
+function generateName(weaponId, allWeapons) {
+  var box = generateBlockBox();
+  var span = document.createElement("span");
+
+  var img = document.createElement("img");
+  img.src = "/public/weapons/" + weaponId + ".png";
+  img.classList = "guess-img";
+  span.appendChild(img);
+
+  span.classList = "guess-span";
+  var txt = document.createElement("span");
+  txt.textContent = allWeapons[weaponId].name;
+  span.appendChild(txt);
 
   if (weaponId == sessionStorage.getItem("weaponId")) {
     console.log("Correct!");
-    container.classList = "correct-container";
+    span.classList.add("correct-span");
   }
   else {
     console.log("Incorrect!");
-    container.classList = "incorrect-container";
+    span.classList.add("incorrect-span");
   }
-  return container;
+
+  box.appendChild(span);
+  return box;
+}
+
+// Generate span for weapon type
+function generateWpnType(weaponId, allWeapons) {
+  var box = generateBlockBox();
+  var span = document.createElement("span");
+  span.classList = "guess-span";
+  span.textContent = capitalizeFirstLetter(allWeapons[weaponId].weapon_type);
+
+  if (allWeapons[weaponId].weapon_type == allWeapons[sessionStorage.getItem("weaponId")].weapon_type) {
+    console.log("Correct!");
+    span.classList.add("correct-span");
+  }
+  else {
+    console.log("Incorrect!");
+    span.classList.add("incorrect-span");
+  }
+  box.appendChild(span);
+  return box;
+}
+
+// Generate span for attack type
+function generateAtkType(weaponId, allWeapons) {
+  var box = generateBlockBox();
+  var span = document.createElement("span");
+  span.classList = "guess-span";
+  span.textContent = capitalizeFirstLetter(allWeapons[weaponId].attack_type);
+
+  var thisType = allWeapons[weaponId].attack_type;
+  var correctType = allWeapons[sessionStorage.getItem("weaponId")].attack_type;
+
+  if (thisType == correctType) {
+    span.classList.add("correct-span");
+  }
+  else if (correctType.includes(thisType) || thisType.includes(correctType)) {
+    span.classList.add("partial-span");
+  }
+  else {
+    span.classList.add("incorrect-span");
+  }
+
+  box.appendChild(span);
+  return box;
+}
+
+// Generate span for strength requirement / scaling
+function generateStr(weaponId, allWeapons) {
+  var box = generateBlockBox();
+  var span = document.createElement("span");
+  span.classList = "guess-span";
+
+  var thisReq = allWeapons[weaponId].requirements.strength;
+  var correctReq = allWeapons[sessionStorage.getItem("weaponId")].requirements.strength;
+  
+  var thisScale = allWeapons[weaponId].bonus.strength;
+  var correctScale = allWeapons[sessionStorage.getItem("weaponId")].bonus.strength;
+
+  if (thisReq == correctReq && thisScale == correctScale) {
+    span.textContent = thisReq + " / " + thisScale;
+    span.classList.add("correct-span");
+  } else {
+    if (thisReq != correctReq && thisScale != correctScale) {
+      span.classList.add("incorrect-span");
+    } else {
+      span.classList.add("partial-span");
+    }
+    var txt = "";
+    // a > b = false (default js behaviour)
+    // in dark souls, higher is better
+    // objective is (arrow) req / scale (arrow)
+    // TODO FIX BREAKSPACE ON ARROWS
+    if (thisReq < correctReq) {
+      var reqArrow = document.createElement("img");
+      reqArrow.classList = "req-arrow";
+      reqArrow.src = "/public/icons/arrow_up.png";
+      span.appendChild(reqArrow);
+    } else if (thisReq > correctReq) {
+      var reqArrow = document.createElement("img");
+      reqArrow.classList = "req-arrow";
+      reqArrow.src = "/public/icons/arrow_down.png";
+      span.appendChild(reqArrow);
+    }
+
+    var txt = document.createElement("span");
+    txt.textContent = thisReq + " / " + thisScale;
+    span.appendChild(txt);
+
+    if (thisScale < correctScale) {
+      var reqArrow = document.createElement("img");
+      reqArrow.classList = "req-arrow";
+      reqArrow.src = "/public/icons/arrow_up.png";
+      span.appendChild(reqArrow);
+    } else if (thisScale > correctScale) {
+      var reqArrow = document.createElement("img");
+      reqArrow.classList = "req-arrow";
+      reqArrow.src = "/public/icons/arrow_down.png";
+      span.appendChild(reqArrow);
+    }
+  }
+
+  box.appendChild(span);
+  return box;
 }
 
 // Populate dropdown
@@ -88,7 +220,7 @@ function populateDropdown(allWeapons) {
     img.src = imgSrc;
     img.id = i;
     img.classList = "w-[48px] h-[48px]";
-    img.title = allWeapons[i].name;
+    img.title = "&nbsp;" + allWeapons[i].name;
     span.appendChild(img);
 
     var innerSpan = document.createElement("span");
@@ -147,6 +279,7 @@ function searchFilter() {
 // Select value in Search
 function selectValue(e, allWeapons) {
   //console.log(e.target.title);
+  e.stopPropagation();
   document.querySelector("#searchInput").value = e.target.title;
 }
 
@@ -174,3 +307,8 @@ function insertGuessRow() {
 document.querySelector("#counter").addEventListener("change", e => {
   console.log(e.target.value);
 })
+
+// Helper functions
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
