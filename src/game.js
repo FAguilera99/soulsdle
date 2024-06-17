@@ -25,6 +25,8 @@ function main(data) {
   document.querySelectorAll(".selection").forEach((element) => {
     element.addEventListener("click", (e) => {
       //console.log("here " + e.target.id);
+      document.querySelector("#searchInput").value = "";
+      document.querySelector("#myDropdown").classList.add("hidden");
       attemptCounter();
       selectValue(e, data);
       generateGuessBox(e, data);
@@ -94,6 +96,7 @@ function generateName(weaponId, allWeapons) {
 
   span.classList = "guess-span";
   var txt = document.createElement("span");
+  txt.classList = "name-txt";
   txt.textContent = allWeapons[weaponId].name;
   span.appendChild(txt);
 
@@ -274,7 +277,7 @@ function populateDropdown(allWeapons) {
   for (var i = 0; i < allWeapons.length; i++) {
     var span = document.createElement("span");
     span.id = i;
-    span.classList = "dropdown-row selection";
+    span.classList = "dropdown-row selection search-row";
 
     var imgSrc = "/weapons/" + i + ".png";
     var img = document.createElement("img");
@@ -324,14 +327,16 @@ function searchFilter() {
   var searchInput = document.getElementById("searchInput");
   var filter = searchInput.value.toUpperCase();
   var div = document.querySelector("#myDropdown");
-  var a = div.getElementsByTagName("a");
+  var a = div.querySelectorAll(".search-row");
 
   for (var i = 0; i < a.length; i++) {
-    var txtValue = a[i].textContent || a[i].innerText;
+    var txtValue = (a[i].querySelector("span")).textContent || a[i].querySelector("span").innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].classList.remove("hidden");
+      a[i].style.display = "";
+
     } else {
-      a[i].classList.add("hidden");
+
+      a[i].style.display = "none";
     }
   }
 }
@@ -340,7 +345,7 @@ function searchFilter() {
 function selectValue(e, allWeapons) {
   //console.log(e.target.title);
   e.stopPropagation();
-  document.querySelector("#searchInput").value = e.target.title;
+  
 }
 
 // Guesses boxes
