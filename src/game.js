@@ -83,7 +83,7 @@ fetch(apiUrl)
 function setModal(wpnName, weaponId) {
   document.querySelectorAll("#modalImg").forEach((element) => {
     element.src =
-      "/public/weapons/" + sessionStorage.getItem("weaponId") + ".png";
+      "/weapons/" + sessionStorage.getItem("weaponId") + ".png";
   });
 
   document.querySelectorAll("#modalName").forEach((element) => {
@@ -149,7 +149,7 @@ function generateName(weaponId, allWeapons) {
   var span = document.createElement("span");
 
   var img = document.createElement("img");
-  img.src = "/public/weapons/" + weaponId + ".png";
+  img.src = "/weapons/" + weaponId + ".png";
   img.classList = "guess-img";
   span.appendChild(img);
 
@@ -531,7 +531,7 @@ function capitalizeFirstLetter(string) {
 
 function createArrow(direction) {
   var img = document.createElement("img");
-  img.src = "/public/icons/arrow_" + direction + ".png";
+  img.src = "/icons/arrow_" + direction + ".png";
   img.classList = "arrow";
   return img;
 }
