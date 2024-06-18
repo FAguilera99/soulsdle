@@ -3,6 +3,9 @@
 // API
 const apiUrl = "https://jgalat.github.io/ds-weapons-api/";
 const numWeapons = 116;
+var attempts = 10;
+var guessedWeapons = []; // Prevent repeat guesses
+var correctElements = []; // Used for clue
 
 // Main
 function main(data) {
@@ -10,16 +13,20 @@ function main(data) {
 
   if (sessionStorage.length == 0) {
     weaponId = Math.floor(Math.random() * numWeapons);
-    console.log(weaponId);
+    //(weaponId);
     sessionStorage.setItem("weaponId", weaponId);
   }
 
   // ONLY FOR TESTING
-  sessionStorage.setItem("weaponId", 13); // 13 == blacksmith giant hammer
+  //sessionStorage.setItem("weaponId", 13); // 13 == blacksmith giant hammer
 
   var allWeapons = data;
+  var wpnName = allWeapons[sessionStorage.getItem("weaponId")].name;
+
+  // CHEAT: only for testing and showcasing
   console.log(allWeapons[sessionStorage.getItem("weaponId")].name);
 
+  setModal(wpnName, weaponId);
   populateDropdown(allWeapons);
 
   document.querySelectorAll(".selection").forEach((element) => {
@@ -27,9 +34,12 @@ function main(data) {
       //console.log("here " + e.target.id);
       document.querySelector("#searchInput").value = "";
       document.querySelector("#myDropdown").classList.add("hidden");
-      attemptCounter();
-      selectValue(e, data);
-      generateGuessBox(e, data);
+
+      if (selectValue(e, data)) {
+        var victory = checkWeapon(e.target.id);
+        attemptCounter(victory);
+        generateGuessBox(e, data);
+      }
     });
   });
 }
@@ -43,6 +53,29 @@ fetch(apiUrl)
   });
 
 //
+// Set victory and defeat screen weapon name and image and play again button
+function setModal(wpnName, weaponId) {
+  document.querySelectorAll("#modalImg").forEach((element) => {
+    element.src =
+      "/public/weapons/" + sessionStorage.getItem("weaponId") + ".png";
+  });
+
+  document.querySelectorAll("#modalName").forEach((element) => {
+    element.textContent = wpnName;
+  });
+
+  document.querySelectorAll("#btnModal").forEach((element) => {
+    element.addEventListener("click", refreshGame);
+  });
+}
+
+// Clear session storage to get new weapon on refresh
+function refreshGame() {
+  sessionStorage.clear();
+  //console.log("hit");
+  location.reload(true);
+}
+
 // Generate row of boxes when a guess is selected
 function generateGuessBox(e, data) {
   const weaponId = e.target.id;
@@ -101,10 +134,10 @@ function generateName(weaponId, allWeapons) {
   span.appendChild(txt);
 
   if (weaponId == sessionStorage.getItem("weaponId")) {
-    console.log("Correct!");
+    //console.log("Correct!");
     span.classList.add("correct-span");
   } else {
-    console.log("Incorrect!");
+    //console.log("Incorrect!");
     span.classList.add("incorrect-span");
   }
 
@@ -123,10 +156,10 @@ function generateWpnType(weaponId, allWeapons) {
     allWeapons[weaponId].weapon_type ==
     allWeapons[sessionStorage.getItem("weaponId")].weapon_type
   ) {
-    console.log("Correct!");
+    //("Correct!");
     span.classList.add("correct-span");
   } else {
-    console.log("Incorrect!");
+    //console.log("Incorrect!");
     span.classList.add("incorrect-span");
   }
   box.appendChild(span);
@@ -168,8 +201,7 @@ function generateStat(weaponId, allWeapons, stat) {
     allWeapons[sessionStorage.getItem("weaponId")].requirements[stat];
 
   var thisScale = allWeapons[weaponId].bonus[stat];
-  var correctScale =
-    allWeapons[sessionStorage.getItem("weaponId")].bonus[stat];
+  var correctScale = allWeapons[sessionStorage.getItem("weaponId")].bonus[stat];
 
   if (thisReq == correctReq && thisScale == correctScale) {
     if (thisScale == null) {
@@ -230,7 +262,7 @@ function generateDmgType(weaponId, allWeapons) {
   damages = Object.keys(damages).map((key) => [key, damages[key]]);
   var myDamages = [];
 
-  damages.forEach(element => {
+  damages.forEach((element) => {
     if (element[1] > 0) {
       myDamages.push(element[0]);
     }
@@ -240,22 +272,23 @@ function generateDmgType(weaponId, allWeapons) {
   var correctId = sessionStorage.getItem("weaponId");
   damages = allWeapons[correctId].damage;
   damages = Object.keys(damages).map((key) => [key, damages[key]]);
-  damages.forEach(element => {
+  damages.forEach((element) => {
     if (element[1] > 0) {
       correctDamages.push(element[0]);
     }
   });
 
-  span.textContent = myDamages.join(', ');
+  span.textContent = myDamages.join(", ");
 
   if (arraysEqual(myDamages, correctDamages)) {
     span.classList.add("correct-span");
   } else {
-    let intersection = myDamages.filter(
-      (element) => correctDamages.includes(element));
+    let intersection = myDamages.filter((element) =>
+      correctDamages.includes(element)
+    );
 
-    console.log(intersection);
-    
+    //console.log(intersection);
+
     if (intersection.length == 0) {
       span.classList.add("incorrect-span");
     } else {
@@ -265,10 +298,6 @@ function generateDmgType(weaponId, allWeapons) {
 
   box.appendChild(span);
   return box;
-
-  console.log(myDamages);
-  console.log(correctDamages);
-  console.log(arraysEqual(myDamages, correctDamages));
 }
 
 // Populate dropdown
@@ -330,12 +359,12 @@ function searchFilter() {
   var a = div.querySelectorAll(".search-row");
 
   for (var i = 0; i < a.length; i++) {
-    var txtValue = (a[i].querySelector("span")).textContent || a[i].querySelector("span").innerText;
+    var txtValue =
+      a[i].querySelector("span").textContent ||
+      a[i].querySelector("span").innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
       a[i].style.display = "";
-
     } else {
-
       a[i].style.display = "none";
     }
   }
@@ -343,9 +372,16 @@ function searchFilter() {
 
 // Select value in Search
 function selectValue(e, allWeapons) {
-  //console.log(e.target.title);
+  console.log(e.target.title);
   e.stopPropagation();
-  
+  // Prevent repeats
+  if (guessedWeapons.includes(e.target.title)) {
+    document.querySelector("#repeatGuess").style.display = "";
+    return false;
+  }
+  document.querySelector("#repeatGuess").style.display = "none";
+  guessedWeapons.push(e.target.title);
+  return true;
 }
 
 // Guesses boxes
@@ -355,10 +391,34 @@ function selectValue(e, allWeapons) {
 //});
 
 // Counter
-var attempts = 10;
-function attemptCounter() {
+function attemptCounter(victory) {
   attempts -= 1;
   document.querySelector("#counter").innerHTML = attempts;
+
+  if (attempts == 7 || attempts == 3) {
+    document.querySelector("#btnClue").style.display = "";
+  }
+  if (attempts == 0 && !victory) {
+    document.querySelector("#defeatScreen").checked = true;
+  }
+
+  return attempts;
+}
+
+document.querySelector("#btnClue").addEventListener("click", (e) => {
+  e.target.style.display = "none";
+  attemptCounter();
+});
+
+// Check whether the right weapon has been guessed
+function checkWeapon(weaponId) {
+  if (weaponId == sessionStorage["weaponId"]) {
+    console.log("victory");
+    document.querySelector("#victoryScreen").checked = true;
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Insert boxes when guessing
@@ -367,11 +427,6 @@ function insertGuessRow() {
 
   div.appendChild(buildGuessBox());
 }
-
-// Clue button
-document.querySelector("#counter").addEventListener("change", (e) => {
-  console.log(e.target.value);
-});
 
 // Helper functions
 function capitalizeFirstLetter(string) {

@@ -72,11 +72,12 @@
         <div class="card-body items-center text-center">
           <div class="flex justify-center">
             <span class="text-2xl">Attempts left:&nbsp;</span>
-            <span class="text-2xl" id="counter">10</span>
+            <span class="text-2xl" id="counter" value="10">10</span>
           </div>
 
           <div id="dropdownContainer" class="*:w-60">
-            <div class="flex justify-center">
+            <div class="flex-col justify-center">
+              <p id="repeatGuess" style="display: none;" class="text-xs mb-1">Already guessed!</p>
               <input
                 type="text"
                 placeholder="Search a weapon.."
@@ -96,8 +97,10 @@
 
           <div class="flex">
             <button
-              class="btn btn-xs btn-primary hidden"
+              style="display: none"
+              class="btn btn-xs btn-primary"
               title="One free attribute"
+              id="btnClue"
             >
               Clue
             </button>
@@ -160,11 +163,49 @@
     </div>
 
     <div class="flex-col content-center justify-center">
-      <div id="guessesDiv" class="flex-col *:content-center *:justify-center w-10/12">
+      <div
+        id="guessesDiv"
+        class="flex-col *:content-center *:justify-center w-10/12"
+      >
         <div
           id="rowTemplate"
           class="grid grid-cols-8 grid-rows-1 my-5 h-[130px]] *:mx-[10px] *:block *:text-center"
-        >
+        ></div>
+      </div>
+    </div>
+
+    <!-- The button to open modal -->
+    <label for="victoryScreen" class="btn">open modal</label>
+    <!-- Victory screen -->
+    <input type="checkbox" id="victoryScreen" class="modal-toggle" />
+    <div class="modal" role="dialog">
+      <div class="modal-box justify-center text-center content-center">
+        <h3 class="font-bold text-lg">You won!</h3>
+        <p class="py-4">The weapon was:</p>
+        <div class="justify-center content-center text-center">
+          <img id="modalImg" />
+        </div>
+        <span id="modalName"></span>
+        <div class="modal-action">
+          <label for="victoryScreen" id="btnModal" class="btn"
+            >Play again</label
+          >
+        </div>
+      </div>
+    </div>
+    <label for="defeatScreen" class="btn">open modal</label>
+    <!-- Defeat screen -->
+    <input type="checkbox" id="defeatScreen" class="modal-toggle" />
+    <div class="modal" role="dialog">
+      <div class="modal-box justify-center text-center content-center">
+        <h3 class="font-bold text-lg">You lost!</h3>
+        <p class="py-4">The weapon was:</p>
+        <div class="justify-center content-center text-center">
+          <img id="modalImg" />
+        </div>
+        <span id="modalName"></span>
+        <div class="modal-action">
+          <label for="defeatScreen" id="btnModal" class="btn">Play again</label>
         </div>
       </div>
     </div>
