@@ -1,13 +1,30 @@
 "use strict";
 
-import 'animate.css';
+import "animate.css";
 
 // API
 const apiUrl = "https://jgalat.github.io/ds-weapons-api/";
+
+// Tutorial button
+var btnTutorial = document.querySelectorAll("#btnTutorial");
+btnTutorial.forEach(element => {
+    element.addEventListener("click", e => {
+        document.querySelector("#tutorial").checked = true;
+    })
+})
+
 const numWeapons = 116;
 var attempts = 10;
 var guessedWeapons = []; // Prevent repeat guesses
-var correctElements = []; // Used for clue
+
+// Summary
+var summWpnType = document.querySelector("#summWpnType");
+var summAtkType = document.querySelector("#summAtkType");
+var summStrength = document.querySelector("#summStrength");
+var summDexterity = document.querySelector("#summDexterity");
+var summIntelligence = document.querySelector("#summIntelligence");
+var summFaith = document.querySelector("#summFaith");
+var summDmgType = document.querySelector("#summDmgType");
 
 // Main
 function main(data) {
@@ -43,6 +60,13 @@ function main(data) {
         generateGuessBox(e, data);
       }
     });
+  });
+
+  // Clues
+  document.querySelector("#btnClue").addEventListener("click", (e) => {
+    e.target.style.display = "none";
+    getClue(allWeapons);
+    attemptCounter();
   });
 }
 
@@ -160,6 +184,8 @@ function generateWpnType(weaponId, allWeapons) {
   ) {
     //("Correct!");
     span.classList.add("correct-span");
+    summWpnType.innerHTML = "";
+    summWpnType.appendChild(span.cloneNode(true));
   } else {
     //console.log("Incorrect!");
     span.classList.add("incorrect-span");
@@ -180,6 +206,8 @@ function generateAtkType(weaponId, allWeapons) {
 
   if (thisType == correctType) {
     span.classList.add("correct-span");
+    summAtkType.innerHTML = "";
+    summAtkType.appendChild(span.cloneNode(true));
   } else if (correctType.includes(thisType) || thisType.includes(correctType)) {
     span.classList.add("partial-span");
   } else {
@@ -250,6 +278,11 @@ function generateStat(weaponId, allWeapons, stat) {
   }
 
   span.appendChild(div);
+  var id = "summ" + capitalizeFirstLetter(stat);
+  if (span.classList.contains("correct-span")) {
+    eval(id).innerHTML = "";
+    eval(id).appendChild(span.cloneNode(true));
+  }
   box.appendChild(span);
   return box;
 }
@@ -284,6 +317,8 @@ function generateDmgType(weaponId, allWeapons) {
 
   if (arraysEqual(myDamages, correctDamages)) {
     span.classList.add("correct-span");
+    summDmgType.innerHTML = "";
+    summDmgType.appendChild(span.cloneNode(true));
   } else {
     let intersection = myDamages.filter((element) =>
       correctDamages.includes(element)
@@ -374,7 +409,7 @@ function searchFilter() {
 
 // Select value in Search
 function selectValue(e, allWeapons) {
-  console.log(e.target.title);
+  //console.log(e.target.title);
   e.stopPropagation();
   // Prevent repeats
   if (guessedWeapons.includes(e.target.title)) {
@@ -407,10 +442,69 @@ function attemptCounter(victory) {
   return attempts;
 }
 
-document.querySelector("#btnClue").addEventListener("click", (e) => {
-  e.target.style.display = "none";
-  attemptCounter();
-});
+function getClue(allWeapons) {
+  var summary = document.querySelector("#summary");
+  var children = summary.children;
+  var options = [];
+
+  // 7 boxes
+  for (var i = 1; i < 7; i++) {
+    if (!children[i].classList.contains("correct-span")) {
+      options.push(children[i]);
+    }
+  }
+
+  var n = Math.floor(Math.random() * (7 - 1 + 1) + 1);
+  var chosen = children[n];
+  //console.log(children[chosen]);
+  //console.log(chosen);
+  var replacement;
+  switch (n) {
+    case 1:
+      replacement = generateWpnType(sessionStorage["weaponId"], allWeapons);
+      break;
+    case 2:
+      replacement = generateAtkType(sessionStorage["weaponId"], allWeapons);
+      break;
+    case 3:
+      replacement = generateStat(
+        sessionStorage["weaponId"],
+        allWeapons,
+        "strength"
+      );
+      break;
+    case 4:
+      replacement = generateStat(
+        sessionStorage["weaponId"],
+        allWeapons,
+        "dexterity"
+      );
+      break;
+    case 5:
+      replacement = generateStat(
+        sessionStorage["weaponId"],
+        allWeapons,
+        "intelligence"
+      );
+      break;
+    case 6:
+      replacement = generateStat(
+        sessionStorage["weaponId"],
+        allWeapons,
+        "faith"
+      );
+      break;
+    case 7:
+      replacement = generateDmgType(sessionStorage["weaponId"], allWeapons);
+      break;
+
+    default:
+      break;
+  }
+
+  console.log(replacement);
+  summary.replaceChild(replacement, chosen);
+}
 
 // Check whether the right weapon has been guessed
 function checkWeapon(weaponId) {
