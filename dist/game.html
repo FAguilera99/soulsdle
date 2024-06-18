@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="icon" href="" />
+    <script type="module" crossorigin src="/assets/game-Df8JYClo.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/game-B-gXXBrj.css">
+    <link rel="stylesheet" crossorigin href="/assets/output-DBYSg3to.css">
+  </head>
+  <body class="bg-base-100">
+    <nav>
+      <div
+        class="navbar bg-gradient-to-r from-primary to-base-100 z-50 fixed font-noto"
+      >
+        <div class="navbar-start">
+          <div class="dropdown">
+            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li><a href="#" id="btnTutorial">How to play</a></li>
+              <li><a href="./game.html">Play</a></li>
+            </ul>
+          </div>
+          <a
+            href="/index.html#top"
+            id="btnTop"
+            class="btn btn-ghost text-2xl drop-shadow-md font-light font-chivo hover:bg-accent hover:bg-opacity-30"
+            ><span class="hover:transition hover:scale-110 text-white"
+              >SOULSDLE</span
+            ></a
+          >
+        </div>
+        <div class="navbar-center hidden lg:flex">
+          <ul class="menu menu-horizontal px-1">
+            <li>
+              <a
+                class="btn bg-transparent border-none hover:bg-accent mx-2"
+                href="#"
+                id="btnTutorial"
+                >How to play</a
+              >
+            </li>
+            <li>
+              <a
+                class="btn bg-transparent border-none hover:bg-accent mx-2"
+                href="./game.html"
+                >Play</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="navbar-end">
+          <a
+            class="btn bg-accent text-black hover:bg-secondary hover:text-white"
+            href="https://github.com/FAguilera99/soulsdle"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <div class="pt-24">
+      <p class="text-center text-2xl">Enter your guess</p>
+    </div>
+    <br />
+
+    <div class="flex content-center justify-center">
+      <div
+        class="card card-bordered w-96 h-[200px] border-secondary text-neutral bg-primary border-4"
+      >
+        <div class="card-body items-center text-center">
+          <div class="flex justify-center">
+            <span class="text-2xl text-neutral">Attempts left:&nbsp;</span>
+            <span class="text-2xl text-neutral" id="counter" value="10"
+              >10</span
+            >
+          </div>
+
+          <div id="dropdownContainer" class="*:w-60">
+            <div class="flex-col justify-center">
+              <p
+                id="repeatGuess"
+                style="display: none"
+                class="text-xs mb-1 animate__animated animate__headShake"
+              >
+                Already guessed!
+              </p>
+              <input
+                type="text"
+                placeholder="Search a weapon.."
+                id="searchInput"
+                autocomplete="off"
+                class="inline-block p-1 rounded bg-base-100 outline-accent focus:outline-secondary *:text-neutral"
+              />
+            </div>
+
+            <div class="flex justify-center">
+              <div
+                id="myDropdown"
+                class="hidden absolute overflow-y-auto z-10 *:z-10 flex-1 max-h-[390px] *:w-60 *:h-16 *:flex *:justify-start *:text-start"
+              ></div>
+            </div>
+          </div>
+
+          <div class="flex">
+            <button
+              style="display: none"
+              class="btn btn-sm text-black bg-accent hover:bg-secondary hover:text-neutral btn-primary"
+              title="One free attribute"
+              id="btnClue"
+            >
+              Clue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div
+        class="grid grid-cols-8 grid-rows-1 my-3 *:mx-[10px] *:block *:text-center bg-blue-900 pt-[2px] mt-2 *:justify-center content-center text-center w-10/12"
+      >
+        <div class="">
+          <span class="inline-block w-max justify-center text-center"
+            >Name</span
+          >
+        </div>
+        <div class="">
+          <span class="inline-block w-max">Weapon Type</span>
+        </div>
+        <div class="">
+          <span class="inline-block w-max">Attack Type</span>
+        </div>
+        <div class="">
+          <span class="inline-block w-max"
+            ><img
+              title="Strength Requirement/Scaling"
+              src="data:image/webp;base64,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"
+              class="h-[32px] w-[32px]"
+          /></span>
+        </div>
+        <div class="">
+          <span class="inline-block w-max"
+            ><img
+              title="Dexterity Requirement/Scaling"
+              src="data:image/webp;base64,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"
+              class="h-[32px] w-[32px]"
+          /></span>
+        </div>
+        <div class="">
+          <span class="inline-block w-max"
+            ><img
+              title="Intelligence Requirement/Scaling"
+              src="data:image/webp;base64,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"
+              class="h-[32px] w-[32px]" /></span
+          ><br />
+        </div>
+        <div class="">
+          <span class="inline-block w-max"
+            ><img
+              title="Faith Requirement/Scaling"
+              src="data:image/webp;base64,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"
+              class="h-[32px] w-[32px]"
+          /></span>
+        </div>
+        <div class="">
+          <span class="inline-block w-max">Damage Types</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-col content-center justify-center">
+      <div
+        id="guessesDiv"
+        class="flex-col *:content-center *:justify-center w-10/12"
+      >
+        <div
+          id="rowTemplate"
+          class="grid grid-cols-8 grid-rows-1 my-5 h-[130px]] *:mx-[10px] *:block *:text-center"
+        ></div>
+
+        <div
+          id="summary"
+          class="grid grid-cols-8 grid-rows-1 my-5 h-[130px]] *:mx-[10px] *:block *:text-center"
+        >
+          <div class="block-box">
+            <span class="guess-span bg-secondary">Summary</span>
+          </div>
+          <div class="block-box" id="summWpnType">
+            <span class="guess-span bg-secondary"></span>
+          </div>
+          <div class="block-box" id="summAtkType">
+            <span class="guess-span bg-secondary"></span>
+          </div>
+          <div class="block-box" id="summStrength">
+            <span class="guess-span bg-secondary"></span>
+          </div>
+          <div class="block-box" id="summDexterity">
+            <span class="guess-span bg-secondary"></span>
+          </div>
+          <div class="block-box" id="summIntelligence">
+            <span class="guess-span bg-secondary"></span>
+          </div>
+          <div class="block-box" id="summFaith">
+            <span class="guess-span bg-secondary"></span>
+          </div>
+          <div class="block-box" id="summDmgType">
+            <span class="guess-span bg-secondary"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tutorial -->
+    <input type="checkbox" id="victoryScreen" class="modal-toggle" />
+    <div class="modal" role="dialog">
+      <div class="modal-box justify-center text-center content-center">
+        <h3 class="font-bold text-lg">You won!</h3>
+        <p class="py-4">The weapon was:</p>
+        <div class="justify-center content-center text-center">
+          <img class="block mx-auto" id="modalImg" />
+        </div>
+        <span id="modalName"></span>
+        <div class="modal-action">
+          <label for="victoryScreen" id="btnModal" class="btn"
+            >Play again</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Victory screen -->
+    <input type="checkbox" id="victoryScreen" class="modal-toggle" />
+    <div class="modal" role="dialog">
+      <div class="modal-box justify-center text-center content-center">
+        <h3 class="font-bold text-lg">You won!</h3>
+        <p class="py-4">The weapon was:</p>
+        <div class="justify-center content-center text-center">
+          <img class="block mx-auto" id="modalImg" />
+        </div>
+        <span id="modalName"></span>
+        <div class="modal-action">
+          <label for="victoryScreen" id="btnModal" class="btn"
+            >Play again</label
+          >
+        </div>
+      </div>
+    </div>
+    <!-- Defeat screen -->
+    <input type="checkbox" id="defeatScreen" class="modal-toggle" />
+    <div class="modal" role="dialog">
+      <div class="modal-box justify-center text-center content-center">
+        <h3 class="font-bold text-lg">You lost!</h3>
+        <p class="py-4">The weapon was:</p>
+        <div class="justify-center content-center text-center">
+          <img class="block mx-auto" id="modalImg" />
+        </div>
+        <span id="modalName"></span>
+        <div class="modal-action">
+          <label for="defeatScreen" id="btnModal" class="btn">Play again</label>
+        </div>
+      </div>
+    </div>
+
+    <article>
+      <input type="checkbox" id="tutorial" class="modal-toggle" />
+      <div class="modal" role="dialog">
+        <div class="modal-box">
+          <h3 class="text-lg font-bold text-center">How to play</h3>
+          <div class="flex-col justify-center text-center content-center overflow-y-auto">
+            <p class="py-4 text">Enter your guess</p>
+            <img src="/assets/1-Bik6EY6m.png" class="block mx-auto w-[200px]">
+            <p class="py-4 text">A correct attribute is green</p>
+            <img src="/assets/2-x6EiYLoQ.png" class="block mx-auto w-[100px]">
+            <p class="py-4 text">An incorrect attribute is red</p>
+            <img src="/assets/3-BNXCyN0d.png" class="block mx-auto w-[100px]">
+            <p class="py-4 text">A partially correct attribute is blue</p>
+            <img src="/assets/4-D6ZYB936.png" class="block mx-auto w-[100px]">
+
+          </div>
+          <label for="tutorial" class="btn">Close!</label>
+        </div>
+        <label class="modal-backdrop" for="tutorial">Close</label>
+      </div>
+    </article>
+  </body>
+</html>
