@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-    <link rel="icon" href="" />
+    <title>Soulsdle</title>
+    <link rel="icon" type="image/x-icon" href="/public/icons/favicon.png" />
     <script defer src="/src/game.js" type="module"></script>
     <link rel="stylesheet" href="./src/output.css" />
   </head>
@@ -134,9 +134,11 @@
       </div>
     </div>
 
-    <div class="">
+    <div
+      class="block justify-center text-center content-center w-10/12 mx-auto"
+    >
       <div
-        class="grid grid-cols-8 grid-rows-1 my-3 *:mx-[10px] *:block *:text-center bg-blue-900 pt-[2px] mt-2 *:justify-center content-center text-center w-10/12"
+        class="grid grid-cols-8 grid-rows-1 my-3 *:mx-[10px] *:block *:text-center bg-primary text-neutral border-4 border-accent rounded pt-[2px] h-20 mt-2 *:justify-center content-center *:content-center text-center"
       >
         <div class="">
           <span class="inline-block w-max justify-center text-center"
@@ -187,11 +189,8 @@
       </div>
     </div>
 
-    <div class="flex-col content-center justify-center">
-      <div
-        id="guessesDiv"
-        class="flex-col *:content-center *:justify-center w-10/12"
-      >
+    <div class="flex-col content-center justify-center w-10/12 mx-auto -mt-10 -mb-10">
+      <div id="guessesDiv" class="flex-col *:content-center *:justify-center">
         <div
           id="rowTemplate"
           class="grid grid-cols-8 grid-rows-1 my-5 h-[130px]] *:mx-[10px] *:block *:text-center"
@@ -285,18 +284,27 @@
       <div class="modal" role="dialog">
         <div class="modal-box">
           <h3 class="text-lg font-bold text-center">How to play</h3>
-          <div class="flex-col justify-center text-center content-center overflow-y-auto">
+          <div
+            class="flex-col justify-center text-center content-center overflow-y-auto"
+          >
             <p class="py-4 text">Enter your guess</p>
-            <img src="/public/tutorial/1.png" class="block mx-auto w-[200px]">
+            <img src="/public/tutorial/1.png" class="block mx-auto w-[200px]" />
             <p class="py-4 text">A correct attribute is green</p>
-            <img src="/public/tutorial/2.png" class="block mx-auto w-[100px]">
+            <img src="/public/tutorial/2.png" class="block mx-auto w-[100px]" />
             <p class="py-4 text">An incorrect attribute is red</p>
-            <img src="/public/tutorial/3.png" class="block mx-auto w-[100px]">
+            <img src="/public/tutorial/3.png" class="block mx-auto w-[100px]" />
             <p class="py-4 text">A partially correct attribute is blue</p>
-            <img src="/public/tutorial/4.png" class="block mx-auto w-[100px]">
-
+            <img src="/public/tutorial/4.png" class="block mx-auto w-[100px]" />
+            <p class="py-4 text">
+              The summary shows what correct attributes you've discovered
+            </p>
+            <img src="/public/tutorial/5.png" class="block mx-auto w-[350px]" />
+            <p class="py-4 text">
+              At 7 and 3 remaining attempts you can give up one attempt to use a clue that will reveal one correct attribute in the summary
+            </p>
+            <img src="/public/tutorial/6.png" class="block mx-auto w-[100px]" />
           </div>
-          <label for="tutorial" class="btn">Close!</label>
+          <label for="tutorial" class="btn bg-accent text-black hover:bg-secondary hover:text-white">Close!</label>
         </div>
         <label class="modal-backdrop" for="tutorial">Close</label>
       </div>
