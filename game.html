@@ -8,7 +8,7 @@
     <script defer src="/src/game.js" type="module"></script>
     <link rel="stylesheet" href="./src/output.css" />
   </head>
-  <div class="navbar bg-base-100 z-50 fixed font-noto">
+  <div class="navbar bg-gradient-to-r from-primary to-base-100 z-50 fixed font-noto">
     <div class="navbar-start">
       <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -56,7 +56,7 @@
   </div>
   <br /><br /><br /><br />
 
-  <body class="">
+  <body class="bg-base-100">
     <script>
       0;
     </script>
@@ -67,23 +67,23 @@
 
     <div class="flex content-center justify-center">
       <div
-        class="card card-bordered w-96 h-[200px] border-blue-800 border-4 text-neutral-content"
+        class="card card-bordered w-96 h-[200px] border-secondary text-neutral bg-primary border-4"
       >
         <div class="card-body items-center text-center">
           <div class="flex justify-center">
-            <span class="text-2xl">Attempts left:&nbsp;</span>
-            <span class="text-2xl" id="counter" value="10">10</span>
+            <span class="text-2xl text-neutral">Attempts left:&nbsp;</span>
+            <span class="text-2xl text-neutral" id="counter" value="10">10</span>
           </div>
 
           <div id="dropdownContainer" class="*:w-60">
             <div class="flex-col justify-center">
-              <p id="repeatGuess" style="display: none;" class="text-xs mb-1">Already guessed!</p>
+              <p id="repeatGuess" style="display: none;" class="text-xs mb-1 animate__animated animate__headShake">Already guessed!</p>
               <input
                 type="text"
                 placeholder="Search a weapon.."
                 id="searchInput"
                 autocomplete="off"
-                class="inline-block p-1 rounded border-black border-2"
+                class="inline-block p-1 rounded bg-base-100 outline-accent focus:outline-secondary *:text-neutral"
               />
             </div>
 
@@ -174,8 +174,24 @@
       </div>
     </div>
 
-    <!-- The button to open modal -->
-    <label for="victoryScreen" class="btn">open modal</label>
+    <!-- Tutorial -->
+    <input type="checkbox" id="victoryScreen" class="modal-toggle" />
+    <div class="modal" role="dialog">
+      <div class="modal-box justify-center text-center content-center">
+        <h3 class="font-bold text-lg">You won!</h3>
+        <p class="py-4">The weapon was:</p>
+        <div class="justify-center content-center text-center">
+          <img id="modalImg" />
+        </div>
+        <span id="modalName"></span>
+        <div class="modal-action">
+          <label for="victoryScreen" id="btnModal" class="btn"
+            >Play again</label
+          >
+        </div>
+      </div>
+    </div>
+
     <!-- Victory screen -->
     <input type="checkbox" id="victoryScreen" class="modal-toggle" />
     <div class="modal" role="dialog">
@@ -193,7 +209,6 @@
         </div>
       </div>
     </div>
-    <label for="defeatScreen" class="btn">open modal</label>
     <!-- Defeat screen -->
     <input type="checkbox" id="defeatScreen" class="modal-toggle" />
     <div class="modal" role="dialog">

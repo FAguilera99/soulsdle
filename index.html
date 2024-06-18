@@ -10,7 +10,7 @@
   </head>
 
   <body class="text-white">
-    <div class="navbar bg-base-100 z-50 fixed font-noto">
+    <div class="navbar bg-gradient-to-r from-primary to-base-100 z-50 fixed font-noto">
       <div class="navbar-start">
         <div class="dropdown">
           <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -48,12 +48,12 @@
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
-          <li><a href="#tutorial">How to play</a></li>
-          <li><a href="./game.html">Play</a></li>
+          <li><a class="btn bg-transparent border-none hover:bg-accent mx-2" href="#tutorial">How to play</a></li>
+          <li><a class="btn bg-transparent border-none hover:bg-accent mx-2" href="./game.html">Play</a></li>
         </ul>
       </div>
       <div class="navbar-end">
-        <a class="btn" href="https://github.com/FAguilera99/soulsdle">GitHub</a>
+        <a class="btn bg-accent text-black hover:bg-secondary hover:text-white" href="https://github.com/FAguilera99/soulsdle">GitHub</a>
       </div>
     </div>
 
@@ -72,11 +72,11 @@
           </p>
           <button
             onclick="location.href='./game.html'"
-            class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"
+            class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-primary text-white border-none hover:text-black hover:bg-accent"
           >
             PLAY
           </button>
-          <p class="text-white">Learn to play below</p>
+          <p class="text-white mt-2">Learn to play below</p>
         </div>
       </div>
     </div>
@@ -84,66 +84,6 @@
     <div class="text-center text-5xl">
       <p id="tutorial">How to play</p>
     </div>
-    <section class="py-5 flex justify-center rounded-box">
-      <div class="carousel rounded-box w-11/12">
-        <div class="carousel-item w-full">
-          <div class="card w-96 shadow-xl image-full [&.card]:before:opacity-0">
-            <figure><img src="media/launch.jpg" alt="Rocket launch" /></figure>
-            <div class="card-body">
-              <h2 class="card-title text-4xl justify-end">
-                TRY A GUESS
-              </h2>
-              <p class="text-xl text-right">
-                Type in the name of a weapon
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item w-full">
-          <div
-            class="card w-96 shadow-xl image-full bg-left [&.card]:before:opacity-20"
-          >
-            <figure>
-              <img
-                src="media/iss.jpg"
-                alt="ISS module during docking procedure"
-              />
-            </figure>
-            <div class="card-body">
-              <h2
-                class="card-title text-4xl align-text-bottom text-black justify-end"
-              >
-                USE ATTRIBUTES
-              </h2>
-              <p class="text-2xl align-text-bottom text-right">
-                Green is correct, blue is partially correct, red is incorrect
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item w-full">
-          <div
-            class="card w-96 shadow-xl image-full bg-left [&.card]:before:opacity-20"
-          >
-            <figure>
-              <img
-                src="media/iss.jpg"
-                alt="ISS module during docking procedure"
-              />
-            </figure>
-            <div class="card-body">
-              <h2
-                class="card-title text-4xl align-text-bottom text-black justify-end"
-              >
-                USE CLUES
-              </h2>
-              <p class="text-2xl align-text-bottom text-right">
-                At 3 and 6 attempts you get one free correctattribute
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    
   </body>
 </html>

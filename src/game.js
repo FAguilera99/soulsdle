@@ -1,5 +1,7 @@
 "use strict";
 
+import 'animate.css';
+
 // API
 const apiUrl = "https://jgalat.github.io/ds-weapons-api/";
 const numWeapons = 116;

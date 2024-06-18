@@ -9,24 +9,23 @@
 
 @layer components {
   .dropdown-row {
-    background-color: theme("colors.blue.800");
+    background-color: theme("colors.secondary");
     color: theme("colors.white");
     display: inline-block;
     padding-top: 5px;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
       1px 1px 0 #000;
   }
-
-  #myDropdown {
-    scrollbar-gutter: stable both-edges;
-  }
-
   .dropdown-row:hover {
     cursor: pointer;
-    background-color: theme("colors.blue.100");
+    background-color: theme("colors.neutral");
     color: theme("colors.black");
     text-shadow: none;
     font-weight: 600;
+  }
+
+  #myDropdown {
+    scrollbar-gutter: stable both-edges;
   }
 
   .block-box {
@@ -73,13 +72,13 @@
     color: whitesmoke;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
       1px 1px 0 #000;
-    background-color: theme("colors.green.600");
+    background-color: theme("colors.success");
   }
   .incorrect-span {
-    background-color: theme("colors.red.700");
+    background-color: theme("colors.error");
   }
   .partial-span {
-    background-color: theme("colors.blue.600");
+    background-color: theme("colors.warning");
   }
   .guess-img {
     height: 64px;
@@ -105,6 +104,4 @@
   .prevent-linebreak {
     white-space: nowrap;
   }
-
-  
 }
